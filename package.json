@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "node server.js",
     "build": "docker build -t electricity-api .",
-    "run": "docker run -p 3000:3000 electricity-api"
+    "run-docker": "docker run -p 3000:3000 electricity-api"
   },
   "author": "",
   "license": "ISC",

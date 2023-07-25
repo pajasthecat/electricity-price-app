@@ -9,6 +9,8 @@ env:
   PROJECT_ID: ${{ vars.PROJECT_ID }}
   SERVICE: ${{ vars.SERVICE }}
   REGION: ${{ vars.REGION }}
+  GAR_LOCATION: ${{ vars.GAR_LOCATION }}
+  REPOSITORY: ${{ vars.REPOSITORY }}
 
 jobs:
   deploy:
@@ -26,6 +28,11 @@ jobs:
         uses: "google-github-actions/auth@v0"
         with:
           credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
+
+      - name: Build and Push Container
+        run: |-
+          docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ github.sha }}" ./
+          docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPOSITORY }}/${{ env.SERVICE }}:${{ github.sha }}"
 
       - name: Deploy to Cloud Run
         id: deploy
