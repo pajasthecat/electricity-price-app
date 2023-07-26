@@ -1,11 +1,11 @@
 import axios from "axios";
 
-export const getTodaysElectricPrices = async () => {
+export const getTodaysElectricPrices = async (area) => {
   const today = new Date();
   const year = today.getFullYear();
   const month = getMonth(today);
   const date = today.getDate();
-  const url = `https://www.elprisetjustnu.se/api/v1/prices/${year}/${month}-${date}_SE4.json`;
+  const url = `https://www.elprisetjustnu.se/api/v1/prices/${year}/${month}-${date}_${area}.json`;
 
   try {
     const response = await axios.get(url);
@@ -16,7 +16,8 @@ export const getTodaysElectricPrices = async () => {
       end: price.time_end,
     }));
   } catch (error) {
-    return error;
+    console.log({ error });
+    throw error;
   }
 };
 

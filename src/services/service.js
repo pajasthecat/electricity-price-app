@@ -1,7 +1,7 @@
 import { getTodaysElectricPrices } from "../clients/electricPriceClient.js";
 
-export const getPrice = async () => {
-  const todaysPrices = await getTodaysElectricPrices();
+export const getPrice = async (area) => {
+  const todaysPrices = await getTodaysElectricPrices(area);
 
   return toGetPriceResponse(todaysPrices);
 };

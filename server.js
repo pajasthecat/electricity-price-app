@@ -7,10 +7,14 @@ import { toResponse } from "./src/mappers/responseMapper.js";
 const app = express();
 const port = process.env.PORT;
 
-app.get("/", async (_, res) => {
+app.get("/electricity/:area", async (req, res) => {
   try {
-    const priceData = await getPrice();
+    const { area } = req.params;
+
+    const priceData = await getPrice(area);
+
     const resp = toResponse(priceData);
+
     res.status(200).send(resp);
   } catch (error) {
     console.log({ error });
