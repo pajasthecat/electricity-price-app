@@ -1,19 +1,26 @@
-import { getTodaysElectricPrices } from "../clients/electricPriceClient.js";
+import { getElectricPriceByDate } from "../clients/electricPriceClient.js";
 
 export const getPrice = async (area) => {
-  const todaysPrices = await getTodaysElectricPrices(area);
+  const today = new Date();
+  const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+  console.log({ today, yesterday });
+  const todaysPrice = await getElectricPriceByDate(area, today);
+  const yesterdaysPrice = await getElectricPriceByDate(area, yesterday);
 
-  return toGetPriceResponse(todaysPrices);
+  return toGetPriceResponse(todaysPrice, yesterdaysPrice);
 };
 
-const toGetPriceResponse = (todaysPrices) => {
-  const median = getMedian(todaysPrices);
+const toGetPriceResponse = (todaysPrices, yesterdaysPrice) => {
+  const todaysMedian = getMedian(todaysPrices);
+  const yesterdaysMedian = getMedian(yesterdaysPrice);
 
   const low = getLowest(todaysPrices);
 
   const high = getHigh(todaysPrices);
 
-  return { median, high, low };
+  const difference = ((1 - todaysMedian / yesterdaysMedian) * 100).toFixed(2);
+
+  return { median: todaysMedian, high, low, difference };
 };
 
 const getMedian = (todaysPrices) => {

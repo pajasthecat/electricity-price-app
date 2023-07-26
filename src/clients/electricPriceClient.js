@@ -1,10 +1,9 @@
 import axios from "axios";
 
-export const getTodaysElectricPrices = async (area) => {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = getMonth(today);
-  const date = today.getDate();
+export const getElectricPriceByDate = async (area, inputDate) => {
+  const year = inputDate.getFullYear();
+  const month = getMonth(inputDate);
+  const date = inputDate.getDate();
   const url = `https://www.elprisetjustnu.se/api/v1/prices/${year}/${month}-${date}_${area}.json`;
 
   try {

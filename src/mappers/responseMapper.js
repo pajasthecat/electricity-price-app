@@ -1,5 +1,5 @@
 export const toResponse = (priceData) => {
-  const { median, high, low } = priceData;
+  const { median, high, low, difference } = priceData;
 
   const response = {
     frames: [
@@ -15,6 +15,7 @@ export const toResponse = (priceData) => {
         text: `${low} kr/kwh`,
         icon: 54390,
       },
+      { text: `${difference}%`, icon: difference > 0 ? 120 : 124 },
     ],
   };
 
