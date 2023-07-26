@@ -3,7 +3,7 @@ import { getElectricPriceByDate } from "../clients/electricPriceClient.js";
 export const getPrice = async (area) => {
   const today = new Date();
   const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-  console.log({ today, yesterday });
+
   const todaysPrice = await getElectricPriceByDate(area, today);
   const yesterdaysPrice = await getElectricPriceByDate(area, yesterday);
 
