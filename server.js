@@ -2,7 +2,7 @@ import express from "express";
 import "dotenv/config";
 
 import { getPrice } from "./src/services/service.js";
-import { toResponse } from ".src/mappers/responseMapper.js";
+import { toResponse } from "./src/mappers/responseMapper.js";
 
 const app = express();
 const port = process.env.PORT;
